@@ -1,0 +1,12 @@
+# works with python=3.8.11
+black==21.4b2
+redis==4.2.1
+rq==1.10.1
+docker==5.0.3
+Werkzeug==1.0.1
+flake8==3.9.1
+Flask==1.1.2
+Flask-Cors==3.0.10
+itsdangerous==1.1.0
+Jinja2==2.11.3
+MarkupSafe==1.1.1

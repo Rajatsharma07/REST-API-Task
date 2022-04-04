@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Job queue</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h5 class="mt-3 mb-3">Jobs queue</h5>
+                {% if build_job_msg %}
+                <h6 id="messageID1" class="form-text text-muted">{{ build_job_msg }}</h6>
+                {% endif %}
+
+                {% if push_job_msg %}
+                <h6 id="messageID2" class="form-text text-muted">{{ push_job_msg }}</h6>
+                {% endif %}
+                {% if jobs %}
+                <h6 id="messageID3" class="form-text text-muted">{{ count_jobs }}</h6>
+                {% for job in jobs %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6>{{ job.func_name }}</h6>
+                        <p>Args: {{ job.args }}</p>
+                        <small class="text-muted d-block">Job ID: {{ job.id }}</small>
+                        <small class="text-muted d-block">Status: {{ job.get_status(refresh=True) }}</small>
+                        <small class="text-muted d-block">Created at: {{ job.created_at.strftime('%a, %d %b %Y
+                            %H:%M:%S') }}</small>
+                        <small class="text-muted d-block">Enqueued at: {{ job.enqueued_at.strftime('%a, %d %b %Y
+                            %H:%M:%S') }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No jobs in the queue</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
