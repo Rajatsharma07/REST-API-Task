@@ -1,4 +1,5 @@
 
+
 # Home Assignment - REST API to Build & Push the docker image from input Dockerfile
 This project takes **Dockerfile** as input through the File Upload web page, builds the image from the Dockerfile, and pushes this image to the DockerHub registry. It is composed of two background jobs, namely **build_job** and **push_job**. The push_job depends on the successful completion of the build_job and is only triggered afterwards.
 
@@ -18,6 +19,8 @@ The APIs are created using Python Flask framework. It uses Redis Queue (RQ) whic
    
  - **Environment creation (apienv):** Create a conda/python environment with Python version 3.8.10 and higher and install all required dependencies specified in the **requirements.txt** file with **pip**.
  - Make sure Docker is installed and running successfully.
+ 
+**NOTE:** Tested on MAC OS, there may be problems while running Redis Server on Windows.
 
 ## Script Parameters
 
@@ -37,5 +40,3 @@ The APIs are created using Python Flask framework. It uses Redis Queue (RQ) whic
  
 ## Logging
 The logs are created in the root directory with the file name: **__ init __.log**.
-
-
