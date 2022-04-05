@@ -116,8 +116,8 @@ def build_push_image():
                         ),
                         201,
                     )
-                return json.dumps(
-                    {"success": False, "message": "No Dockerfile found"},
+                return (
+                    {"success": False, "message": "no Dockerfile uploaded"},
                     400,
                     {
                         "ContentType": "application/json"
@@ -128,7 +128,7 @@ def build_push_image():
             return (
                 {
                     "success": False,
-                    "message": "no message available",
+                    "message": "an error occured, kindly check the logs",
                 },
                 400,
                 {"Content-Type": "application/json"},
@@ -156,7 +156,7 @@ def job_status():
                     {
                         "success": False,
                         "message": f"Job is in {job.get_status(refresh=True)} status",
-                        "exception": str(job.exc_info),
+                        "error": str(job.exc_info),
                     },
                     200,
                     {"ContentType": "application/json"},
@@ -177,7 +177,7 @@ def job_status():
                     "success": False,
                     "message": "No job found with the given id",
                 },
-                400,
+                200,
                 {"Content-Type": "application/json"},
             )
         except Exception as ex:
@@ -185,7 +185,7 @@ def job_status():
             return (
                 {
                     "success": False,
-                    "message": "no message available",
+                    "message": "an error occured, kindly check the logs",
                 },
                 400,
                 {"Content-Type": "application/json"},
