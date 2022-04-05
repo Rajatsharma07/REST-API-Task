@@ -1,5 +1,4 @@
 import time, logging
-from rq.decorators import job
 
 try:
     from app import USERNAME, PASSWORD, docker_client

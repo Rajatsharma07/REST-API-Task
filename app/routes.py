@@ -1,9 +1,9 @@
 import logging
-from pathlib import Path
-from rq.registry import FailedJobRegistry
 
 try:
-    from flask import request, json, render_template
+    from pathlib import Path
+    from rq.registry import FailedJobRegistry
+    from flask import request, render_template
 
     from app import app
     from app import (
