@@ -106,12 +106,15 @@ def build_push_image():
 
                     count_queued_jobs = f"{len(main_queue)} job(s) in the queue."
 
-                    return render_template(
-                        "task_template.html",
-                        build_job_msg=build_job_msg,
-                        push_job_msg=push_job_msg,
-                        jobs_count=count_queued_jobs,
-                        jobs=jobs,
+                    return (
+                        render_template(
+                            "task_template.html",
+                            build_job_msg=build_job_msg,
+                            push_job_msg=push_job_msg,
+                            jobs_count=count_queued_jobs,
+                            jobs=jobs,
+                        ),
+                        201,
                     )
                 return json.dumps(
                     {"success": False, "message": "No Dockerfile found"},
@@ -122,12 +125,17 @@ def build_push_image():
                 )
         except Exception as ex:
             logging.critical("Error: %s", ex)
-            return {
-                "success": False,
-                "message": ex,
-            }
-    return render_template(
-        "upload_template.html"
+            return (
+                {
+                    "success": False,
+                    "message": "no message available",
+                },
+                400,
+                {"Content-Type": "application/json"},
+            )
+    return (
+        render_template("upload_template.html"),
+        200,
     )  # File upload template to upload the Dockerfile
 
 
@@ -154,27 +162,33 @@ def job_status():
                     {"ContentType": "application/json"},
                 )
             success = job.is_finished
-            return json.dumps(
+            return (
                 {
                     "success": success,
                     "message": f"Job is in {job.get_status(refresh=True)} status",
-                }
+                },
+                200,
+                {"Content-Type": "application/json"},
             )
         except rq.exceptions.NoSuchJobError as ex:
             logging.critical("Error: %s", ex)
-            return json.dumps(
+            return (
                 {
                     "success": False,
                     "message": "No job found with the given id",
-                }
+                },
+                400,
+                {"Content-Type": "application/json"},
             )
         except Exception as ex:
             logging.critical("Error: %s", ex)
-            return json.dumps(
+            return (
                 {
                     "success": False,
-                    "message": ex,
-                }
+                    "message": "no message available",
+                },
+                400,
+                {"Content-Type": "application/json"},
             )
     return (
         {"success": False, "message": "No job id is provided"},
